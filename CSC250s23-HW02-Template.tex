@@ -1,0 +1,258 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\definecolor{smithblue}{HTML}{002855}
+\definecolor{smithyellow}{HTML}{F2A900}
+
+\usepackage[parfill]{parskip}
+\parskip=\baselineskip
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}[1][{\color{red} Solution:}]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries}]}{\end{trivlist}}
+
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{Submitted by: \studentName\\
+\collaborators}
+\rhead{CSC250 Spring 2023 - Homework 02\\
+\today{}}
+\cfoot{p. \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+
+\newcommand{\studentName}{Sabrina Hatch} %replace with your name
+
+\newcommand{\collaborators}{ 
+	% Comment out the line below if you worked alone
+	with \textit{Sabrina Hatch, Ramsha Rauf, Shalom Mhanda}
+	% Uncomment the line below if you worked alone
+	% \textit{I did not collaborate with anyone on this assignment.}
+}
+
+% --------------
+% Exercise 1
+% --------------
+\begin{exercise}{1}
+For each of the following REs on the alphabet $\Sigma = [a,b,c]$, identify one word that is \textbf{in the language} recognized by the RE, and one word that is \textbf{not in the language}.
+\begin{enumerate}[(a)]
+\item $(ab)^*+bc^*$
+% -------------------------------------------
+%  Write your answer to Q1a below
+% -------------------------------------------
+\begin{solution} 
+\quad\\
+IN: abab\\
+OUT: bababa \\ 
+\end{solution}
+
+\item $a^*bc^*$
+% -------------------------------------------
+%  Write your answer to Q1b below
+% -------------------------------------------
+\begin{solution}
+\quad\\
+IN:  b \\
+OUT:  abbbc
+\end{solution}
+
+\item $(a+b)^*(b+c)^*$
+% -------------------------------------------
+%  Write your answer to Q1c below
+% -------------------------------------------
+\begin{solution}
+\quad\\
+IN:  ab \\
+OUT:  cabb
+\end{solution}
+
+\end{enumerate}
+\end{exercise}
+
+\clearpage
+
+% --------------
+% Exercise 2
+% --------------
+\begin{exercise}{2}
+
+Give a regular expression for each of the following languages. In all cases, the alphabet is $\Sigma = \{0,1\}$.
+\begin{enumerate}[(a)]
+	\item $\{ w \in \Sigma^* \ | \ w \texttt{ has an odd number of 0s followed by a single 1}\}$
+	% -------------------------------------------
+	%  Write your answer to Q2a below
+	% -------------------------------------------
+	\begin{solution}
+ $0(00)^*1$
+	\end{solution}
+	
+	\item $\{w \in \Sigma^* \ | \ w \texttt{ starts in a triple letter (000 or 111)}\}$
+	% -------------------------------------------
+	%  Write your answer to Q2b below
+	% -------------------------------------------
+	\begin{solution}
+ $(000 + 111) \Sigma^*$
+	\end{solution}
+	
+	\item $\{w \in \Sigma^* \ | \ w \texttt{ contains exactly three 1s or at least two 0s}\}$
+	% -------------------------------------------
+	%  Write your answer to Q2c below
+	% -------------------------------------------
+	\begin{solution}
+ $(0^* \ 1 \ 0^* \ 1 \ 0^* \ 1 \  0^*)  + (\Sigma^* \ 0  \ \Sigma^* \ 0 \ \Sigma^* $)
+	\end{solution}
+	
+\end{enumerate}
+
+\end{exercise}
+
+\clearpage
+% --------------
+% Exercise 3
+% --------------
+\begin{exercise}{3}
+Show that any language $L_F$ containing only finitely many strings is regular.
+\end{exercise}
+
+% -------------------------------------------
+%  Write your answer to Q3 below
+% -------------------------------------------
+\begin{solution}
+ Any language containing finitely many strings is regular because we can generate the language using a regular expression with a finite amount of alternation. For example, if we have $L_F$ with k number of strings, then we can generate the language using a regular expression with k-1 operations of an alternation.
+
+
+
+\begin{proof}[\unskip\nopunct]
+   \qedhere
+\end{proof}
+
+\end{solution}
+
+
+\clearpage
+
+% --------------
+% Exercise 5\4
+% --------------
+\begin{exercise}{4}
+
+Show that if $L$ is a regular language, then the reverse language $L^R$:
+
+$$L^R = \{w^R \ | \ w\in L \texttt{ and } w^R \texttt{ is the word } w \texttt{ written in reverse}\}$$
+
+is also a regular language (i.e. regular languages are closed under \textbf{reversal}).
+
+Remember, proving a language is regular is all about proving it has a regular expression that can generate it!
+
+{\Large \textit{Hint: }}
+ try induction! by:
+\begin{enumerate}
+    \item \textbf{Base cases}: prove this works for the 3 base cases:
+    \begin{itemize}
+        \item $L =\emptyset$ (show the reverse of an empty language is regular)
+        \item $w=\epsilon$ (show you can get the regular expression for the reverse of an empty word)
+        \item $w=a$ \text{ where} $a$ \text{ represents any single valid symbol}(show you can get the regular expression for the reverse of a word made of a single symbol)
+    \end{itemize}
+    \item\textbf{ Induction Hypothesis}: assume that you have 
+    \begin{itemize}
+        \item two regular expressions: $E$ and $F$ that generate $L_F = L(F)$ and $L_G = L(G)$ respectively, AND for which
+        \item we are able to find a regular expressions $F^R$ and $G^R$ such that  $L^R_F = L(F^R)$ and $L^R_G = L(G^R)$, and where $L^R_F = \text{ Reverse of } L_F$ and $L^R_G = \text{ Reverse of } L_G$
+    \end{itemize}
+
+    \item \textbf{Induction Step}: Using the hypothesis, show how we can reverse all of the operations for extending regular expressions (alternation, concatenation, and Kleene star); 
+\end{enumerate}
+
+\end{exercise}
+
+% -------------------------------------------
+%  Write your answer to Q4 below
+% -------------------------------------------
+\begin{solution}
+ \item To start, we need to prove the base cases. 
+     \begin{itemize}[label=\ding{212}]
+     \item First, we will prove this for the reverse of an empty language $L = \emptyset$. 
+        \begin{itemize}[label=\ding{75}]
+        \item The regular expression for this empty language is $RE = \emptyset$. The reverse of  $RE$, denoted by $RE^R$, is also equal to $\emptyset$. Therefore, we can represent the language generated by $RE^R$ as $L^R = \emptyset$. And since the empty set can be described by a regular expression, $L^R = \emptyset$ is also regular. 
+        \end{itemize}
+     \item Next, we will prove this for the reverse of the language containing only the empty word $L=\epsilon$.
+        \begin{itemize}[label=\ding{75}]
+        \item The regular expression for this language containing only the empty word is $RE = \epsilon$. The reverse of  $RE$, denoted by $RE^R$, is also equal to $\epsilon$. Therefore, we can represent the word generated by $RE^R$ as $L^R = \epsilon$. And since epsilon can be described by a regular expression, $L^R = \epsilon$ is also regular. 
+        \end{itemize}
+     \item Finally, we will prove this for the reverse of the language containing only one word composed of a single symbol $L=a$.
+     \begin{itemize}[label=\ding{75}]
+        \item The regular expression for this language containing only a single symbol is $RE = a$. The reverse of  $RE$, denoted by $RE^R$, is also equal to $a$. Therefore, we can represent the word generated by $RE^R$ as $L^R = a$. And since a symbol can be described by a regular expression, $L^R = a$ is also regular. 
+     \end{itemize}
+  \item Now, we craft our induction hypothesis. 
+  \begin{itemize}[label=\ding{75}]
+        \item Assuming that you have a regular language that is represented by $L(F)$, where F is the regular expression generating the language. If you reverse $L(F)$, the result is another regular language denoted by $L(F^R)$, where $F^R$ is a regular expression generating the reversed language $L(F^R)$.
+     \end{itemize}
+
+\item Now for the induction step, we will show how we can reverse  all of the operations for extending regular expressions (alternation, concatenation, and Kleene star). 
+     \begin{itemize}[label=\ding{75}]
+        \item If you are given regular expressions $F$ and  $G$, you can construct a regular expression $H$ as an alternation of $F$ and $G$: $H = G + F$. This is equal to $L(H) = L(F) \cup L(G)$. To find the reverse of $L(H)$, represented by $L(H^R)$, we can use our induction hypothesis. Using our induction hypothesis we find $L(H^R) = L(F^R + G^R)$, where $F^R$ and $G^R$ are also regular expressions. Thus the alternation of these two reversed regular expressions will produce a regular reversed language $L(H^R)$. Such that $L(H^R) = L(F^R) \cup L(G^R)$. 
+        \end{itemize}
+
+        \begin{itemize}[label=\ding{75}]
+        \item If you are given regular expressions $F$ and  $G$, you can construct a regular expression $H$ as a concatenation of $F$ and $G$: $H = FG$. This is equal to $L(H) = L(F) \cap L(G)$. To find the reverse of $L(H)$, represented by $L(H^R)$, we can use our induction hypothesis. Using our induction hypothesis we find $L(H^R) = L(G^RF^R)$, where $F^R$ and $G^R$ are also regular expressions (note that the order of concatenation of $FG$ must also reversed). Thus the concatenation of these two reversed regular expressions will produce a regular reversed language $L(H^R)$. Such that $L(H^R) = L(G^RF^R)$.
+        \end{itemize}
+
+        \begin{itemize}[label=\ding{75}]
+        \item If you are given regular expression $F$, you can construct a regular expression $H$ as a Kleene star of $F$: $H = F^*$. This is equal to $L(H) = L(F^*)$. To find the reverse of $L(H)$, represented by $L(H^R)$, we can use our induction hypothesis. Using our induction hypothesis we find $L(H^R) = L(F^*)^R = (L(F)^*)^R = L(F^R)^*$, where $F^R$ is also a regular expression. Thus the Kleene star of the reversed regular expression will produce a regular reversed language $L(H^R)$. Such that $L(H^R) = L(F^R)^*$.
+        \end{itemize}
+
+\item Therefore the induction hypothesis is true under all 3 operations: alternation, concatenation and Kleene star as the language is closed under all 3 operations.  Thus  the reversal of a regular language $L$ to $L^R$ is also a regular language because regular languages are also closed under reversal. 
+
+     \end{itemize}
+\begin{proof}[\unskip\nopunct]
+   \qedhere
+\end{proof}   
+\end{solution}
+
+
+% -----------------
+% References
+% -----------------
+\vfill
+\begin{thebibliography}{9}
+\bibitem{sipser} 
+Sipser, Michael. 
+\textit{Introduction to the Theory of Computation.}
+Course Technology, 2005. ISBN: 9780534950972
+
+\bibitem{critchlow2011foundation}
+Critchlow, Carol and Eck, David
+\textit{Foundation of computation.},
+Critchlow Carol, 2011
+
+\end{thebibliography}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+ 
+\end{document}
